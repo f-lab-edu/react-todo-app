@@ -1,22 +1,19 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
 import './App.css'
-import { Button } from "@/components/ui/button"
+import { AppTitle } from '@/components/AppTitle'
+import { TodoTemplate } from '@/components/TodoTemplate'
+import { SearchGroup } from '@/components/SearchGroup'
+import { PlusButton } from '@/components/PlusButton'
 
 function App() {
-  // const [count, setCount] = useState(0)
-
   return (
-    <div>
+    <TodoTemplate>
+        <AppTitle/>
+        <SearchGroup/>
         <div>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad animi autem culpa, dolores eligendi esse magnam magni molestiae nostrum obcaecati optio porro ratione repellendus saepe sed soluta tenetur unde ut!
+            test
         </div>
-
-        <div>
-            <Button variant="outline">Click me</Button>
-        </div>
-
-    </div>
+        <PlusButton/>
+    </TodoTemplate>
   )
 }
 
