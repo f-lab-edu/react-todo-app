@@ -13,6 +13,16 @@ function App() {
         { id: 3, text: 'Learning English', checked: false },
     ]);
 
+    // search input value
+    const [search, setSearch] = useState('');
+
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value);
+    }
+
+    // search input value와 todos의 text를 비교하여 일치하는 todo만 보여줌
+    const filteredTodos = todos.filter((todo) => todo.text.includes(search));
+
     // PlusButton 컴포넌트에서 받은 input 값을 todos에 추가
     const handleTodoAdd = (text: string) => {
         setTodos([
@@ -33,8 +43,8 @@ function App() {
   return (
     <TodoTemplate>
         <AppTitle/>
-        <SearchGroup/>
-        <TodoList todos={todos} onTodoRemove={handleTodoRemove}/>
+        <SearchGroup onChangeInput={handleSearchChange}/>
+        <TodoList todos={filteredTodos} onTodoRemove={handleTodoRemove}/>
         <PlusButton onTodoAdd={handleTodoAdd}/>
     </TodoTemplate>
   )
