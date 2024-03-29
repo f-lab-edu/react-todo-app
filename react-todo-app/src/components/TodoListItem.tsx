@@ -27,7 +27,7 @@ export const TodoListItem = ({ todo, onTodoRemove }) => {
 
     return (
         <div className="flex justify-between items-center">
-            <Checkbox checked={checked} />
+            <Checkbox id={id} onClick={handleTodoRemove} checked={checked}/>
             <div className="flex justify-start items-center flex-grow px-2">
                 <div className="text">{text}</div>
             </div>
