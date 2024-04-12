@@ -1,51 +1,32 @@
 import './App.css'
-import { AppTitle } from '@/components/AppTitle'
-import { TodoTemplate } from '@/components/TodoTemplate'
-import { SearchGroup } from '@/components/SearchGroup'
-import { PlusButton } from '@/components/PlusButton'
-import { TodoList } from '@/components/TodoList'
-import { useState } from 'react'
+import {AppTitle} from '@/components/AppTitle'
+import {TodoTemplate} from '@/components/TodoTemplate'
+import {SearchGroup} from '@/components/SearchGroup'
+import {PlusButton} from '@/components/PlusButton'
+import {TodoList} from '@/components/TodoList'
+import {useState} from 'react'
+import {useStore} from './store'
 
 function App() {
-    const [todos, setTodos] = useState([
-        { id: 1, text: 'Cleaning up', checked: false },
-        { id: 2, text: 'Call to mom', checked: false },
-        { id: 3, text: 'Learning English', checked: false },
-    ]);
+  const todos = useStore((state) => state.todos);
+  const addTodo = useStore((state) => state.addTodo);
+  const removeTodo = useStore((state) => state.removeTodo);
 
-    // search input value
-    const [search, setSearch] = useState('');
+  // search input value
+  const [search, setSearch] = useState('');
 
-    const handleSearchChange = (e) => {
-        setSearch(e.target.value);
-    }
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  }
 
-    // search input value와 todos의 text를 비교하여 일치하는 todo만 보여줌
-    const filteredTodos = todos.filter((todo) => todo.text.includes(search));
-
-    // PlusButton 컴포넌트에서 받은 input 값을 todos에 추가
-    const handleTodoAdd = (text: string) => {
-        setTodos([
-            ...todos,
-            {
-                id: todos.length + 1,
-                text: text,
-                checked: false,
-            },
-        ]);
-    };
-
-    // TodoList 컴포넌트에서 받은 id를 가진 todo를 삭제
-    const handleTodoRemove = (id: number) => {
-        setTodos(todos.filter((todo) => todo.id !== id));
-    };
-
+  // search input value와 todos의 text를 비교하여 일치하는 todo만 보여줌
+  const filteredTodos = todos.filter((todo) => todo.text.toLowerCase().includes(search.toLowerCase()));
   return (
     <TodoTemplate>
-        <AppTitle/>
-        <SearchGroup onChangeInput={handleSearchChange}/>
-        <TodoList todos={filteredTodos} onTodoRemove={handleTodoRemove}/>
-        <PlusButton onTodoAdd={handleTodoAdd}/>
+      <AppTitle/>
+      <SearchGroup onChangeInput={handleSearchChange}/>
+      <TodoList todos={filteredTodos} onTodoRemove={removeTodo}/>
+      <PlusButton onTodoAdd={addTodo}/>
     </TodoTemplate>
   )
 }
